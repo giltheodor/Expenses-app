@@ -11,9 +11,10 @@ import Button from "../components/UI/Button";
 import { GlobalStyles } from "../constants/styles";
 
 const ManageExpense = ({ route, navigation }) => {
-  const expenseCtx = useContext(ExpensesContext);
-  const editedExpenseId = route.params?.expenseId;
+  const expensesCtx = useContext(ExpensesContext);
 
+  const editedExpenseId = route.params?.expenseId;
+  console.log(editedExpenseId);
   const isEditing = !!editedExpenseId;
 
   useLayoutEffect(() => {
@@ -23,27 +24,29 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
-    expenseCtx.deleteExpense(editedExpenseId);
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   };
 
   const cancelHandler = () => {
+    navigation.goBack();
+  };
+  const confirmHandler = () => {
     if (isEditing) {
-      expenseCtx.updateExpense(editedExpenseId, {
+      console.log("click");
+      expensesCtx.updateExpense(editedExpenseId, {
         description: "Test!!!!",
         amount: 29.99,
         date: new Date("2022-10-05"),
       });
     } else {
-      expenseCtx.addExpense({
+      console.log("click");
+      expensesCtx.addExpense({
         description: "Test",
         amount: 19.99,
         date: new Date("2022-10-09"),
       });
     }
-    navigation.goBack();
-  };
-  const confirmHandler = () => {
     navigation.goBack();
   };
 
